@@ -26,6 +26,7 @@ public class MyTest implements PageProcessor {
         page.addTargetRequests(page.getHtml().links().regex("(https://github.com/[\\w\\-]+/[\\w\\-]+)").all());
     }
 
+//    /html/body/div[1]/div[4]/div[1]/div[1]/table/tbody/tr[1]/td[2]
     @Override
     public Site getSite() {
         return site;
