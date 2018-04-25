@@ -33,14 +33,7 @@ public class MyTest implements PageProcessor {
     }
 
     public static void main(String[] args) {
-
-        Spider.create(new MyTest())
-                //从"https://github.com/code4craft"开始抓
-                .addUrl("https://github.com/code4craft")
-                //开启5个线程抓取
-                .thread(5)
-                //启动爬虫
-                .run();
+        Spider.create(new CnblogsSpider()).addUrl(new String[]{"https://www.cnblogs.com/"}).thread(5).run();
     }
 
 }

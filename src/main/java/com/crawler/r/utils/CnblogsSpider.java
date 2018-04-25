@@ -1,5 +1,6 @@
 package com.crawler.r.utils;
 
+import com.crawler.r.c.EtherScan;
 import com.crawler.r.entity.Article;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -47,6 +48,11 @@ public class CnblogsSpider implements PageProcessor {
     @Override
     public Site getSite() {
         return this.site;
+    }
+
+    public static void main(String[] args){
+
+        Spider.create(new CnblogsSpider()).addUrl(new String[]{"https://www.cnblogs.com/"}).thread(5).run();
     }
 
 }

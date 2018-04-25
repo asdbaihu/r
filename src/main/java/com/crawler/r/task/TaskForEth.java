@@ -15,6 +15,7 @@ public class TaskForEth {
 
     private static final String  url="https://etherscan.io/token/";
 
+//    /token/generic-tokentxns2?contractAddress=0x23352036e911a22cfc692b5e2e196692658aded9&a=&mode=
     @Autowired
     TargetTokenService tokenService;
 
@@ -22,7 +23,7 @@ public class TaskForEth {
      * 每分钟抓取一次 'token' 页面的数据
      *
      */
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0 0/2 * * * ?")
     public void startCrawler(){
         List<TargetToken> list = tokenService.findAllList();
         if (list.size()>0){
@@ -30,11 +31,9 @@ public class TaskForEth {
                 String token=tt.getTargetToken();
                 String urls=url+token;
                 //抓去主token的页面数据
-                Spider.create(new EtherScan()).addUrl(new String[]{urls}).thread(1).run();
+                Spider.create(new EtherScan()).addUrl(new String[]{urls}).thread(5).run();
             }
         }
-
-
 
     }
 
