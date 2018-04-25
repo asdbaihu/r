@@ -1,4 +1,4 @@
-package com.crawler.r.c;
+package com.crawler.r.utils;
 
 import com.crawler.r.entity.Article;
 import us.codecraft.webmagic.Page;

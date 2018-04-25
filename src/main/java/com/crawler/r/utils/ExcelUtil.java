@@ -112,7 +112,7 @@ public class ExcelUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        File file = new File("\\wj\\import.csv");
+        File file = new File("/Users/pangxichen/IdeaProjects/export.csv");
         FileInputStream inputStream = new FileInputStream(file);
         List<List<Object>> lists = readExcel(inputStream);
         System.out.println("22");
