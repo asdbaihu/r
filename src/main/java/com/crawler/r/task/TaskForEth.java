@@ -20,9 +20,6 @@ import java.util.List;
 @Component
 public class TaskForEth {
 
-
-//     @Scheduled(cron = "0/10 * * * * ?")
-
     @Autowired
     TargetTokenService tokenService;
     @Autowired
@@ -30,31 +27,33 @@ public class TaskForEth {
 
     /**
      * 每分钟抓取一次 'token' 页面的数据
-     *
      */
     @Scheduled(cron = "0 0/1 * * * ?")
-    public void startCrawler(){
+    public void startCrawler() {
         List<TargetToken> list = tokenService.findAllList();
-        if (list.size()>0){
-            for (TargetToken tt:list){
-                String token=tt.getTargetToken();
-                String urls= Constants.URL+token;
+        if (list.size() > 0) {
+            for (TargetToken tt : list) {
+                String token = tt.getTargetToken();
+                String urls = Constants.URL + token;
                 System.out.println("start====>1");
-                //抓去主token的页面数据
-                Spider.create(new EtherScan()).addUrl(new String[]{urls}).thread(2).run();
-                System.out.println("start====>3");
-                String i_url=Constants.URL+"generic-tokentxns2?contractAddress="+token+"&a=&mode=";
-
-                Spider.create( new EtherIframe()).addUrl(new String[]{i_url}).addPipeline(new Pipeline() {
+                //抓去主token的总数量
+                Spider.create(new EtherScan()).addUrl(new String[]{urls}).addPipeline(new Pipeline() {
                     @Override
                     public void process(ResultItems resultItems, Task task) {
-                        List<TokenTransfers> transfers= (List<TokenTransfers>) resultItems.get("transfers");
+                        String all = resultItems.get("all");
+                    }
+                }).thread(2).run();
+                // 抓取 交易列表数据  判断当前数据库的最近交易时间  是否等于当前页时间，！= 就需要开启抓取下一页，（循环）
+                String i_url = Constants.URL + "generic-tokentxns2?contractAddress=" + token + "&a=&mode=";
+                Spider.create(new EtherIframe()).addUrl(new String[]{i_url}).addPipeline(new Pipeline() {
+                    @Override
+                    public void process(ResultItems resultItems, Task task) {
+                        List<TokenTransfers> transfers = (List<TokenTransfers>) resultItems.get("transfers");
                         transfersService.save(transfers);
                     }
                 }).thread(2).run();
             }
         }
-
     }
 
 }

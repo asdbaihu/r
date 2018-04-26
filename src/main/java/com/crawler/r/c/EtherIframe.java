@@ -36,8 +36,6 @@ public class EtherIframe implements PageProcessor {
             } catch (Exception e) {
                 res = transfersDate.substring(transfersDate.indexOf("title=\"") + 7, transfersDate.lastIndexOf("PM") + 2);
             }
-
-            String s_date = transfersDate.replace("<span rel=\"tooltip\" data-placement=\"right\" title=\"", "").replace("\">2 hrs 18 mins ago</span>", "");
             Date date = null;
             try {
                 date = Constants.sdf.parse(res);
@@ -59,8 +57,6 @@ public class EtherIframe implements PageProcessor {
             i++;
         }
         page.putField("transfers",list);
-        System.out.println("start====>4");
-        System.out.println("end ------");
     }
 
     @Override

@@ -17,10 +17,8 @@ public class EtherScan  implements PageProcessor {
 
     @Override
     public void process(Page page) {
-
         String all= page.getHtml().xpath("/html/body/div[1]/div[4]/div[1]/div[1]/table/tbody/tr[1]/td[2]/text()").toString();
-        System.out.println("总量：=====>" +all);
-        System.out.println("start====>2");
+        page.putField("all",all);
     }
 
     @Override

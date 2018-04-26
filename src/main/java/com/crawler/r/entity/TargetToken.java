@@ -20,6 +20,15 @@ public class TargetToken implements Serializable{
     @Column(length = 256)
     private String allToken;
 
+    @Column
+    private String name;
+
+    /**
+     * 开启爬去数据标志 0 开启，1关闭
+     */
+    @Column
+    private String flag;
+
     /**
      * 删除标记
      */
@@ -57,5 +66,13 @@ public class TargetToken implements Serializable{
 
     public void setAllToken(String allToken) {
         this.allToken = allToken;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

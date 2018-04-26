@@ -1,4 +1,4 @@
-package com.crawler.r.task;
+package com.crawler.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.TaskScheduler;
