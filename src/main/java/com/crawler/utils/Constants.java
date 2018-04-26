@@ -1,4 +1,4 @@
-package com.crawler.r.utils;
+package com.crawler.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

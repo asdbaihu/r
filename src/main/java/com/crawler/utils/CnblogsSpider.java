@@ -1,6 +1,5 @@
-package com.crawler.r.utils;
+package com.crawler.utils;
 
-import com.crawler.r.c.EtherScan;
 import com.crawler.r.entity.Article;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;

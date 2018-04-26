@@ -1,15 +1,12 @@
 package com.crawler.r.c;
 
 import com.crawler.r.entity.TokenTransfers;
-import com.crawler.r.jpa.TokenTransfersRepository;
-import com.crawler.r.service.TokenTransfersService;
-import com.crawler.r.utils.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.crawler.utils.Constants;
+import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 
-import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,10 +15,8 @@ import java.util.List;
 /**
  * Created by hcj on 2018/4/26.
  */
+@Service
 public class EtherIframe implements PageProcessor {
-
-    @Autowired
-    private TokenTransfersRepository repository;
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
 
@@ -63,6 +58,7 @@ public class EtherIframe implements PageProcessor {
             list.add(transfers);
             i++;
         }
+        page.putField("transfers",list);
         System.out.println("start====>4");
         System.out.println("end ------");
     }
@@ -71,4 +67,6 @@ public class EtherIframe implements PageProcessor {
     public Site getSite() {
         return site;
     }
+
+
 }

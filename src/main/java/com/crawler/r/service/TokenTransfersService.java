@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by hcj on 2018/4/25.
  */
-@Service
+@Service("transfersService")
 public class TokenTransfersService {
 
     @Autowired
