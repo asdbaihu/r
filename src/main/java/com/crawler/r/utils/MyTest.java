@@ -24,6 +24,7 @@ public class MyTest implements PageProcessor {
 
         // 部分三：从页面发现后续的url地址来抓取
         page.addTargetRequests(page.getHtml().links().regex("(https://github.com/[\\w\\-]+/[\\w\\-]+)").all());
+        page.addTargetRequest("(https://github.com/[\\w\\-]+/[\\w\\-]+)");
     }
 
 //    /html/body/div[1]/div[4]/div[1]/div[1]/table/tbody/tr[1]/td[2]
