@@ -1,24 +1,20 @@
 package com.crawler.r.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by hcj on 2018/4/25.
- *
- * 交易信息  关联 目标 tokenid
+ * Created by hcj on 2018/4/29.
  */
 @Entity
-@Table(name = "token_transfers")
-public class TokenTransfers implements Serializable {
-
+@Table(name = "temporary_data")
+public class TemporaryData {
     @Id
     @GeneratedValue
     private Long id;
 
     /**
-     * token id  例如 FDZ 的id
+     * token合约 id  例如 FDZ 的id
      */
     @Column
     private Long tokenId;
@@ -36,7 +32,7 @@ public class TokenTransfers implements Serializable {
     private Date transfersDate;
 
     /**
-     *  from
+     * from
      */
     @Column
     private String fromToken;
@@ -56,14 +52,6 @@ public class TokenTransfers implements Serializable {
     @Column
     private Date createDate;
 
-    @Column
-    private String del;
-
-    /**
-     *  需要处理token类型判断标志 0 是初始值 1 已处理。
-     */
-    @Column
-    private String flag;
 
     public Long getId() {
         return id;
@@ -71,6 +59,14 @@ public class TokenTransfers implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getTokenId() {
+        return tokenId;
+    }
+
+    public void setTokenId(Long tokenId) {
+        this.tokenId = tokenId;
     }
 
     public Date getTransfersDate() {
@@ -111,30 +107,6 @@ public class TokenTransfers implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public String getDel() {
-        return del;
-    }
-
-    public void setDel(String del) {
-        this.del = del;
-    }
-
-    public Long getTokenId() {
-        return tokenId;
-    }
-
-    public void setTokenId(Long tokenId) {
-        this.tokenId = tokenId;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
     }
 
     public String getToken() {

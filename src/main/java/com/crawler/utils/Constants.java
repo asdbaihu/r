@@ -9,6 +9,21 @@ import java.util.Locale;
 public class Constants {
 
     public  static SimpleDateFormat sdf = new SimpleDateFormat("MMM-d-yyyy K:m:s a",Locale.ENGLISH);
-    public static final String  URL="https://etherscan.io/token/";
+
+    public static final String  URL_S="https://etherscan.io/";
+    /**
+     * 总量获取的 url
+     */
+    public static  final String URL_1="https://etherscan.io/token/";
+
+    /**
+     *  获取交易列表的token
+     */
+    public static final String URL_2="https://etherscan.io/token/generic-tokentxns2?contractAddress=";
+
+    /**
+     * 判断用户类型的 url
+     */
+    public static final String URL_3="https://etherscan.io/address/";
 
 }
