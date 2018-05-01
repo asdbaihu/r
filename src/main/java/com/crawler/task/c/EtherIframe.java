@@ -24,7 +24,7 @@ import java.util.List;
 @Service
 public class EtherIframe implements PageProcessor {
 
-    private static Log log= LogFactory.getLog(EtherIframe.class);
+    private static Log log = LogFactory.getLog(EtherIframe.class);
 
     private Site site = Site.me()
             .setDomain(Constants.URL_S)
@@ -44,29 +44,28 @@ public class EtherIframe implements PageProcessor {
         List<TemporaryData> list = new ArrayList<>();
         TemporaryData transfers = null;
         int i = 2;
-        while (i <= 51) {
+        boolean next=true;
+        while (next) {
+
             transfers = new TemporaryData();
             String transfersDate = page.getHtml().xpath("//*[@id=\"maindiv\"]/table/tbody/tr[" + i + "]/td[2]/html()").toString();
-            log.info("transfersDate =======================>"+transfersDate);
-            String res = null;
-            try {
-                res = transfersDate.substring(transfersDate.indexOf("title=\"") + 7, transfersDate.lastIndexOf("AM") + 2);
-            } catch (Exception e) {
-                res = transfersDate.substring(transfersDate.indexOf("title=\"") + 7, transfersDate.lastIndexOf("PM") + 2);
+            if (transfersDate==null){
+                next=false;
+                continue;
             }
-            log.info("res  =======================>"+res);
-
-            Date date = null;
             try {
-                date = Constants.sdf.parse(res);
-            } catch (ParseException e) {
-                System.out.println("异常的日期转换==========" + res);
+                String res = transfersDate.substring(transfersDate.indexOf("title=\"") + 7, transfersDate.lastIndexOf("AM\"") + 2);
+                transfers.setTransfersDate(res);
+                log.info(i + ":AM---->res  =======================>" + res);
+            } catch (Exception e) {
+                String res = transfersDate.substring(transfersDate.indexOf("title=\"") + 7, transfersDate.lastIndexOf("PM\"") + 2);
+                transfers.setTransfersDate(res);
+                log.info(i + ":PM---->res  =======================>" + res);
             }
             String from = page.getHtml().xpath("//*[@id=\"maindiv\"]/table/tbody/tr[" + i + "]/td[3]/span/a/text()").toString();
             String to = page.getHtml().xpath("//*[@id=\"maindiv\"]/table/tbody/tr[" + i + "]/td[5]/span/a/text()").toString();
             String quantity = page.getHtml().xpath("//*[@id=\"maindiv\"]/table/tbody/tr[" + i + "]/td[6]/text()").toString();
 
-            transfers.setTransfersDate(date);
             transfers.setFromToken(from);
             transfers.setToToken(to);
             transfers.setQuantity(quantity);
@@ -74,7 +73,7 @@ public class EtherIframe implements PageProcessor {
             list.add(transfers);
             i++;
         }
-        page.putField("transfers",list);
+        page.putField("transfers", list);
     }
 
     @Override

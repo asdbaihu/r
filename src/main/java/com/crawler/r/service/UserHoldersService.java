@@ -7,6 +7,8 @@ import com.crawler.r.jpa.UserHoldersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserHoldersService {
 
@@ -21,6 +23,13 @@ public class UserHoldersService {
         return holdersRepository.findByTargetIdAndUAddress(id,address);
     }
 
+    /**
+     * 查询为处理数据
+     * @return
+     */
+    public List<UserHolders> selectByFlag(){
+       return holdersRepository.selectByFlag();
+    }
 }
 
 

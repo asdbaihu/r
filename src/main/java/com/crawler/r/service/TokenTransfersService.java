@@ -53,4 +53,11 @@ public class TokenTransfersService {
         return transfersRepository.getByIdLimit(id);
     }
 
+    public TokenTransfers getByIdAndDate(Long id,String date,String froms,String to){
+        return transfersRepository.getByIdAndDate(id,date,froms,to);
+    }
+
+    public void save(TokenTransfers tokenTransfers){
+        transfersRepository.saveAndFlush(tokenTransfers);
+    }
 }

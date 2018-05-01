@@ -29,7 +29,7 @@ public class TemporaryData {
      * 交易时间
      */
     @Column
-    private Date transfersDate;
+    private String transfersDate;
 
     /**
      * from
@@ -69,11 +69,11 @@ public class TemporaryData {
         this.tokenId = tokenId;
     }
 
-    public Date getTransfersDate() {
+    public String getTransfersDate() {
         return transfersDate;
     }
 
-    public void setTransfersDate(Date transfersDate) {
+    public void setTransfersDate(String transfersDate) {
         this.transfersDate = transfersDate;
     }
 

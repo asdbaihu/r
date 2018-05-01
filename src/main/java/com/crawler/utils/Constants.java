@@ -9,6 +9,7 @@ import java.util.Locale;
 public class Constants {
 
     public  static SimpleDateFormat sdf = new SimpleDateFormat("MMM-d-yyyy K:m:s a",Locale.ENGLISH);
+    public  static SimpleDateFormat sdf_1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static final String  URL_S="https://etherscan.io/";
     /**

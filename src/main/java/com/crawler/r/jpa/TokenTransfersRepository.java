@@ -20,4 +20,7 @@ public interface TokenTransfersRepository extends JpaRepository<TokenTransfers,L
 
     @Query(value = "SELECT * FROM token_transfers tt WHERE tt.token_id=:id ORDER BY tt.transfers_date DESC LIMIT 1",nativeQuery = true)
     TokenTransfers getByIdLimit(@Param("id")Long id);
+
+    @Query(value = "select * from token_transfers where token_id =:id and transfers_date=:date and from_token=:froms and to_token=:to",nativeQuery = true)
+    TokenTransfers getByIdAndDate(@Param("id")Long id,@Param("date")String date,@Param("froms")String froms,@Param("to")String to);
 }

@@ -41,7 +41,7 @@ import java.util.List;
 @Component
 public class TaskForEth {
 
-    private static Log log= LogFactory.getLog(TaskForEth.class);
+    private static Log log = LogFactory.getLog(TaskForEth.class);
 
     @Autowired
     TokenTransfersService transfersService;
@@ -52,7 +52,7 @@ public class TaskForEth {
 
 
     /**
-     * 每分钟抓取一次 '交易列表的数据
+     * 每分钟处理一次交易信息的数据判断用户的持有量
      */
     @Scheduled(cron = "0 0/2 * * * ?")
     public void startCrawlerTable() {
@@ -68,7 +68,7 @@ public class TaskForEth {
                     // 更新已经处理过的数据标记（flag） 为 1
                     tt.setFlag("1");
                     transfersService.update(tt);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     log.info("更新持有量出错。。。。");
                 }
@@ -99,11 +99,64 @@ public class TaskForEth {
                             holders.settAddress(tt);
                             holders.setuAddress(utt);
                             holders.setCreateDate(new Date());
+                            holders.setFlag("0");
                             holdersService.save(holders);
                         } else {
                             userHolders.setBalance(balance);
                             holdersService.save(userHolders);
                         }
+                    }
+                }).thread(1).run();
+    }
+
+
+    /**
+     * 处理 用户类型
+     */
+    @Scheduled(cron = "0 0/2 * * * ?")
+    public void startCrawlerUsers() {
+        // 获取待处理的用户持有信息
+        List<UserHolders> list = holdersService.selectByFlag();
+        if (list.size() > 0) {
+            //判断用户数据是否存在 ，不存在就去抓取下个页面判断用户的类型  个人 or 交易所
+            for (UserHolders holders : list) {
+                try {
+                    // 校验用户信息是否存在
+                    TokenUser tokenUser = tokenUserService.findByAddress(holders.getuAddress());
+                    if (tokenUser == null) {
+                        findType(holders.getuAddress());
+                    }
+                    holders.setFlag("1");
+                    holdersService.save(holders);
+                } catch (Exception e) {
+                    log.info("处理用户类型时出现异常，不做处理继续执行。。。。");
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取token 的类型 个人或者交易所
+     */
+    private void findType(String token) {
+        String i_url = Constants.URL_3 + token;
+        Spider.create(new TokenType())
+                .addUrl(new String[]{i_url})
+                .addPipeline(new Pipeline() {
+                    @Override
+                    public void process(ResultItems resultItems, Task task) {
+                        String res = resultItems.get("transactions");
+                        String tnxs = res.trim().replace(" txns", "").replace(" txn", "");
+                        TokenUser tokenUser = new TokenUser();
+                        tokenUser.setAddress(token);
+                        tokenUser.setTxns(tnxs);
+                        if (Integer.parseInt(tnxs) > 100000) {
+                            tokenUser.setTokenType("1");
+                        } else {
+                            tokenUser.setTokenType("0");
+                        }
+                        tokenUser.setCreateDate(new Date());
+                        tokenUserService.save(tokenUser);
                     }
                 }).thread(1).run();
     }

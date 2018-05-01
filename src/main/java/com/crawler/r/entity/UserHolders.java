@@ -50,6 +50,12 @@ public class UserHolders implements Serializable{
     @Column
     private Date createDate;
 
+    /**
+     * 数据处理标记  0 待处理
+     */
+    @Column
+    private String flag;
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -105,5 +111,13 @@ public class UserHolders implements Serializable{
 
     public void setTargetId(Long targetId) {
         this.targetId = targetId;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

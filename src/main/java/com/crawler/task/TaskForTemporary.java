@@ -51,7 +51,7 @@ public class TaskForTemporary {
                     }
                     dataService.saveList(temp);
                 }
-            }).thread(2).start();
+            }).thread(1).run();
         }
     }
 
