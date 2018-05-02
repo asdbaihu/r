@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 获取要处理合约 token交易信息到临时表  ，更新合约的总量
  */
-@Component
+//@Component
 public class TaskForTemporary {
 
     @Autowired

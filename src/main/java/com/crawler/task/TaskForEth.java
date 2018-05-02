@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * 更新用户持有的该地址的总量
  */
-@Component
+//@Component
 public class TaskForEth {
 
     private static Log log = LogFactory.getLog(TaskForEth.class);

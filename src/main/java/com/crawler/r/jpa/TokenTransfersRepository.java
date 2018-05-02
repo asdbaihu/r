@@ -23,4 +23,22 @@ public interface TokenTransfersRepository extends JpaRepository<TokenTransfers,L
 
     @Query(value = "select * from token_transfers where token_id =:id and transfers_date=:date and from_token=:froms and to_token=:to",nativeQuery = true)
     TokenTransfers getByIdAndDate(@Param("id")Long id,@Param("date")String date,@Param("froms")String froms,@Param("to")String to);
+
+    /**
+     * 获取今天的信息
+     * @param tid
+     * @return
+     */
+    @Query(value = "select * from token_transfers where token_id=:tid and TO_DAYS(create_date) = TO_DAYS(NOW())",nativeQuery = true)
+    List<TokenTransfers> findListByTid(@Param("tid")Long tid);
+
+
+    /**
+     * 获取昨天的信息
+     */
+    @Query(value = "select * from token_transfers where  token_id=:tid and TO_DAYS(NOW()) - TO_DAYS(create_date) = 1",nativeQuery = true)
+    List<TokenTransfers> findListByTidYesToday(@Param("tid")Long tid);
+
+
+
 }

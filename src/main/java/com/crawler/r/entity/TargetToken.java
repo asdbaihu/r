@@ -44,6 +44,9 @@ public class TargetToken implements Serializable {
     @Column
     private String del;
 
+    @Column
+    private String eName;
+
 
     public Long getId() {
         return id;
@@ -99,5 +102,13 @@ public class TargetToken implements Serializable {
 
     public void setHtml(String html) {
         this.html = html;
+    }
+
+    public String geteName() {
+        return eName;
+    }
+
+    public void seteName(String eName) {
+        this.eName = eName;
     }
 }

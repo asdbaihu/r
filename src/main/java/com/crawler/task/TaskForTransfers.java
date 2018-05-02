@@ -24,7 +24,7 @@ import java.util.List;
  * 临时数据表的数据判断用户类型 、并插入交易表，删除已完成的数据
  * Created by hcj on 2018/4/27.
  */
-@Component
+//@Component
 public class TaskForTransfers {
 
     private static Log log= LogFactory.getLog(TaskForTransfers.class);

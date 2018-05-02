@@ -18,8 +18,16 @@ public class TokenUserService {
         return userRepository.findByAddress(address);
     }
 
+    public TokenUser getNotNull(String address){
+        return userRepository.findByAddressAndNotNull(address);
+    }
+
     public void save(TokenUser tokenUser){
          userRepository.save(tokenUser);
+    }
+
+    public List<TokenUser> findAll(){
+        return userRepository.findAll();
     }
 
 }

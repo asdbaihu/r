@@ -20,5 +20,7 @@ public interface UserHoldersRepository extends JpaRepository<UserHolders, Long>,
     @Query(value = "SELECT * FROM holders tt WHERE tt.flag='0'",nativeQuery = true)
     List<UserHolders> selectByFlag();
 
+    @Query(value = "SELECT * FROM holders WHERE percentage IS NULL",nativeQuery = true)
+    List<UserHolders> getListHolders();
 
 }

@@ -49,10 +49,6 @@ public class TokenTransfersService {
         transfersRepository.saveAndFlush(transfers);
     }
 
-    public TokenTransfers getByIdLimit(Long id){
-        return transfersRepository.getByIdLimit(id);
-    }
-
     public TokenTransfers getByIdAndDate(Long id,String date,String froms,String to){
         return transfersRepository.getByIdAndDate(id,date,froms,to);
     }
@@ -60,4 +56,24 @@ public class TokenTransfersService {
     public void save(TokenTransfers tokenTransfers){
         transfersRepository.saveAndFlush(tokenTransfers);
     }
+
+    /**
+     * 今天数据查询
+     * @param tid
+     * @return
+     */
+    public List<TokenTransfers> findListByTid(Long tid){
+        return transfersRepository.findListByTid(tid);
+    }
+
+    /**
+     * 昨天的数据
+     */
+    public List<TokenTransfers> findListByTidYesToday(Long tid){
+        return transfersRepository.findListByTidYesToday(tid);
+    }
+    /**
+     * 本周的数据
+     */
+
 }

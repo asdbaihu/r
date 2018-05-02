@@ -19,6 +19,7 @@ public class UserHoldersService {
         holdersRepository.saveAndFlush(holders);
     }
 
+
     public UserHolders findByTargetIdAndUAddress(Long id,String address){
         return holdersRepository.findByTargetIdAndUAddress(id,address);
     }
@@ -29,6 +30,11 @@ public class UserHoldersService {
      */
     public List<UserHolders> selectByFlag(){
        return holdersRepository.selectByFlag();
+    }
+
+
+    public List<UserHolders> getListHolders(){
+        return holdersRepository.getListHolders();
     }
 }
 

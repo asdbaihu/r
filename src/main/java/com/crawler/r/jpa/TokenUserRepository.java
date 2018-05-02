@@ -15,5 +15,7 @@ public interface TokenUserRepository extends JpaRepository<TokenUser, Long>, Ser
     @Query(value = "select tu from TokenUser tu where tu.address=:address",nativeQuery = false)
     TokenUser findByAddress(@Param("address") String addess);
 
+    @Query(value = "select tu from TokenUser tu where tu.address=:address and tu.tokenType is not null",nativeQuery = false)
+    TokenUser findByAddressAndNotNull(@Param("address") String addess);
 
 }

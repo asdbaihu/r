@@ -27,4 +27,9 @@ public class Constants {
      */
     public static final String URL_3="https://etherscan.io/address/";
 
+    /**
+     * 获取流通量
+     */
+    public static final String URL_4="https://www.feixiaohao.com/currencies/";
+
 }
