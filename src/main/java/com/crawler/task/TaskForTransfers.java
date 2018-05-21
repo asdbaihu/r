@@ -41,23 +41,18 @@ public class TaskForTransfers {
      */
     @Scheduled(cron = "0 0/1 * * * ?")
     public void startCrawlerForUser() throws ParseException {
-
         //获取所有临时数据
         List<TemporaryData> list = dataService.findList();
-
         if (list != null && list.size() > 0) {
-            //保存的目标
-            List<TokenTransfers> transferses=new ArrayList<>();
             TokenTransfers tt = null;
-
             for (TemporaryData td : list) {
                 // 做一层校验 ，避免因为执行时间较长第二次查处的集合里的数据已被删除
                 TemporaryData data=dataService.findById(td.getId());
-                //查询是最近时间的一条数据
-                Date date = Constants.sdf.parse(td.getTransfersDate());
-                String d=Constants.sdf_1.format(date);
-                TokenTransfers transfers=transfersService.getByIdAndDate(data.getTokenId(),d,td.getFromToken(),td.getToToken());
                 if (data!=null){
+                    //查询是最近时间的一条数据，时间校验
+                    Date date = Constants.sdf.parse(td.getTransfersDate());
+                    String d=Constants.sdf_1.format(date);
+                    TokenTransfers transfers=transfersService.getByIdAndDate(data.getTokenId(),d,td.getFromToken(),td.getToToken());
                     if (transfers==null){
                         tt = new TokenTransfers();
                         tt.setToken(td.getToken());
@@ -73,7 +68,6 @@ public class TaskForTransfers {
                     }
                 }
             }
-            //批量删除
             dataService.deleteList(list);
         }
 

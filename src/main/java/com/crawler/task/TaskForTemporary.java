@@ -33,33 +33,37 @@ public class TaskForTemporary {
      */
     @Scheduled(cron = "0 0/1 * * * ?")
     public void startCrawlerTable() {
-        List<TargetToken> tokens = tokenService.findAllList();
-        for (TargetToken target : tokens) {
-            // 抓取 交易列表数据 只需要最新的数据 进行存储，要做时间判断
-            String url = Constants.URL_2 + target.getTargetToken() + "&a=&mode=";
-            Spider.create(new EtherIframe()).addUrl(new String[]{url}).addPipeline(new Pipeline() {
-                @Override
-                public void process(ResultItems resultItems, Task task) {
-                    // 50条数据
-                    List<TemporaryData> temporaryDatas = (List<TemporaryData>) resultItems.get("transfers");
-                    List<TemporaryData> temp = new ArrayList<>();
-                    for (int i = 0; i < temporaryDatas.size(); i++) {
-                        //加入交易记录所属合约地址、id
-                        temporaryDatas.get(i).setTokenId(target.getId());
-                        temporaryDatas.get(i).setToken(target.getTargetToken());
-                        temp.add(temporaryDatas.get(i));
+        try{
+            List<TargetToken> tokens = tokenService.findAllList();
+            List<TemporaryData> temp = new ArrayList<>();
+            for (TargetToken target : tokens) {
+                // 抓取 交易列表数据 只需要最新的数据 进行存储，要做时间判断
+                String url = Constants.URL_2 + target.getTargetToken() + "&a=&mode=";
+                Spider.create(new EtherIframe()).addUrl(new String[]{url}).addPipeline(new Pipeline() {
+                    @Override
+                    public void process(ResultItems resultItems, Task task) {
+                        // 抓去的数据集合
+                        List<TemporaryData> temporaryDatas = (List<TemporaryData>) resultItems.get("transfers");
+                        for (int i = 0; i < temporaryDatas.size(); i++) {
+                            //加入交易记录所属合约地址、id
+                            temporaryDatas.get(i).setTokenId(target.getId());
+                            temporaryDatas.get(i).setToken(target.getTargetToken());
+                            temp.add(temporaryDatas.get(i));
+                        }
                     }
-                    dataService.saveList(temp);
-                }
-            }).thread(1).run();
+                }).thread(1).run();
+            }
+            dataService.saveList(temp);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
 
     /**
-     * 每天抓取更新一次合约的总量
+     * 每天抓取更新一次合约的总量13
      */
-    @Scheduled(cron = "0 0/9 * * * ?")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void startCrawler() throws IOException {
         List<TargetToken> list = tokenService.findAllList();
         //更新 总量
